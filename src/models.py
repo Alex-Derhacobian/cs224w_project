@@ -2,7 +2,7 @@ import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from layers import *
+from src.layers import *
 from torch.nn.parameter import Parameter
 
 device = torch.device("cuda:0")
@@ -81,7 +81,7 @@ class GCNModel(nn.Module):
         if outputlayer == "gcn":
             self.outgc = GraphConvolutionBS(baseblockinput, nclass, outactivation, withbn, withloop)
         # elif outputlayer ==  "none": #here can not be none
-        #    self.outgc = lambda x: x 
+        #    self.outgc = lambda x: x
         else:
             self.outgc = Dense(nhid, nclass, activation)
 

@@ -6,7 +6,7 @@ import numpy as np
 import scipy.sparse as sp
 import torch
 
-from normalization import fetch_normalization, row_normalize
+from src.normalization import fetch_normalization, row_normalize
 
 datadir = "data"
 

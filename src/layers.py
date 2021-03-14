@@ -243,6 +243,7 @@ class ResGCNBlock(Module):
         :param aggrmethod: not applied.
         :param dense: not applied.
         """
+        
         super(ResGCNBlock, self).__init__()
         self.model = GraphBaseBlock(in_features=in_features,
                                     out_features=out_features,

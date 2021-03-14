@@ -24,7 +24,7 @@ from sample import Sampler
 
 # Training settings
 parser = argparse.ArgumentParser()
-# Training parameter 
+# Training parameter
 parser.add_argument('--no_cuda', action='store_true', default=False,
                     help='Disables CUDA training.')
 parser.add_argument('--fastmode', action='store_true', default=False,
@@ -137,7 +137,7 @@ scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[200, 300, 400,
 if args.cuda:
     model.cuda()
 
-# For the mix mode, lables and indexes are in cuda. 
+# For the mix mode, lables and indexes are in cuda.
 if args.cuda or args.mixmode:
     labels = labels.cuda()
     idx_train = idx_train.cuda()
@@ -169,7 +169,8 @@ def train(epoch, train_adj, train_fea, idx_train, val_adj=None, val_fea=None):
     if val_adj is None:
         val_adj = train_adj
         val_fea = train_fea
-
+    print(labels)
+    exit()
     t = time.time()
     model.train()
     optimizer.zero_grad()
@@ -248,7 +249,7 @@ for epoch in range(args.epochs):
         train_adj = train_adj.cuda()
 
     sampling_t = time.time() - sampling_t
-    
+
     # The validation set is controlled by idx_val
     # if sampler.learning_type == "transductive":
     if False:
@@ -269,13 +270,13 @@ for epoch in range(args.epochs):
               's_time: {:.4f}s'.format(sampling_t),
               't_time: {:.4f}s'.format(outputs[5]),
               'v_time: {:.4f}s'.format(outputs[6]))
-    
+
     if args.no_tensorboard is False:
         tb_writer.add_scalars('Loss', {'train': outputs[0], 'val': outputs[2]}, epoch)
         tb_writer.add_scalars('Accuracy', {'train': outputs[1], 'val': outputs[3]}, epoch)
         tb_writer.add_scalar('lr', outputs[4], epoch)
         tb_writer.add_scalars('Time', {'train': outputs[5], 'val': outputs[6]}, epoch)
-        
+
 
     loss_train[epoch], acc_train[epoch], loss_val[epoch], acc_val[epoch] = outputs[0], outputs[1], outputs[2], outputs[
         3]
